@@ -342,7 +342,22 @@ FROM persona (matricula, asignatura)
 INNER JOIN matricula ON persona.id = matricula.id_alumno
 INNER JOIN curso_escolar ON matricula.id_curso_escolar = curso_escolar.id
 WHERE curso_escolar.inicio = 2018 AND curso_escolar.fin = 2019;
-*/
-SELECT apellido1, apellido2, persona.nombre, departamento.nombre
+
+SELECT departamento.nombre, apellido1, apellido2, persona.nombre
 FROM persona
-LEFT JOIN profesor ON persona.id_profesor = profesor.id
+LEFT JOIN profesor ON id_profesor = persona.id
+LEFT JOIN departamento ON departamento.id = profesor.id_departamento
+WHERE tipo = 'profesor'
+ORDER BY departamento.nombre, apellido1, apellido2, persona.nombre;
+
+
+SELECT apellido1, apellido2, persona.nombre, departamento.id
+FROM persona
+LEFT JOIN profesor ON id_profesor = persona.id
+WHERE profesor.id_departamento IS NULL;
+*/
+
+SELECT departamento.nombre
+FROM departamento
+RIGHT JOIN profesor ON departamento.id = profesor.id_departamento
+WHERE departamento.id IS NULL;
